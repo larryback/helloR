@@ -126,3 +126,48 @@ paste0('A', 'B')
 colnames(m)[10] = paste0(colnames(m)[10], 10)
 colnames(m)[20] = paste0(colnames(m)[20], 20)
 colnames(m[, c(10,20)]
+         
+         df1 = data.frame(column1=11:15, column2=LETTERS[1:5])         
+df1         
+str(df1)
+data
+class(data)
+df2 = data[1:10, 1:6]
+df2
+df3 = data[1:10, c(1:3, 7,8)]
+df3
+df100 = data[101:110, 1:6]
+df100
+#list ####
+lst1 = list(a=1:3, b=4:6)
+lst1
+lst1$a
+lst1['a']
+lst2 = list(a=1:3, b=c(4, '5', 6))
+lst2
+str(lst2)
+names(lst2)
+lst3 = list(1:3, LETTERS[1:3], c(2.5, 4.5, 3.7))
+lst3
+lst3[1]
+unlist(lst3)    
+unlist(lst1)
+s = "123"
+i = as.numeric(s)
+as.character(i)
+m2df = as.data.frame(m2)
+class(m2df)
+str(m2)
+str(m2df)
+tbl = table(data$수학)
+dft = as.data.frames(tbl)
+as.factor(1:5)
+cbind(df2, df3)
+df = merge(x = df2, y = df3, by = "학번", by ="반", by ="성별" , all = TRUE)
+df
+df$반.y = NULL
+df$성별.y = NULL
+data = data[c("학번", "반x", "성별x", "국어", "영어", "수학", "과학", "예체")]
+#2
+df4 [,c(1:4, 7, 6, 8, 5)]
+cn = colnames()
