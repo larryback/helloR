@@ -1,0 +1,7 @@
+mpg = as.data.frame(ggplot2::mpg)
+library(dplyr)
+library(ggplot2)
+str(mpg)
+View(mpg)
+summary(mpg)
+mpg = as.data.frame(ggplot2::midwest)
