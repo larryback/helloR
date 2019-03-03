@@ -1,3 +1,36 @@
+#1 mpg 데이터에서 통합 연비(도시와 고속도로)가 높은 순으로 출력하시오.
+
+mpg = as.data.frame(ggplot2::mpg)
+library(ggplot2)
+library(dplyr)
+
+?mpg
+mpg$total = (mpg$cty + mpg$hwy)/2  # 통합연비 변수
+
+mpg %>% arrange(desc(mpg$total)) # 통합연비가 높은 순으로 출력
+
+
+#2 mpg 데이터에서 생산연도별 연료 종류에 따른 통합연비를 연도순으로 출력하시오.
+
+mpg = as.data.frame(ggplot2::mpg)
+library(ggplot2)
+library(dplyr)
+
+mpg_new = mpg[mpg$year, mpg$fl, order(mpg$total),]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #3 midwest 데이터를 data.frame으로 불러온 후, 데이터의 특징을 설명하시오.
 
 mpg = as.data.frame(ggplot2::mpg)
@@ -8,15 +41,25 @@ summary(mpg)
 library(dplyr)
 library(ggplot2)
 midwest = as.data.frame(ggplot2::midwest)
-head(midwest)
-tail(midwest)
-View(midwest)
-dim(midwest)
-str(midwest)
-summary(midwest)
+
+head(midwest) # Raw 데이터 앞부분 확인. 6행의 데이타와 28개 필드로 구성
+tail(midwest) # Raw 데이터 뒷부분 확인. 6행의 데이타와 28개 필드로 구성
+
+View(midwest) # View 창을 통해서 원자료를 직접 보여 줍니다. 
+dim(midwest)  # 데이타 프레임이 437행 28열로 구성 되어 있습니다. 
+
+str(midwest)  # midwest 데이터가 데이터 프레임이고 437개 관측치, 28개 변수로 구성되어 있다. PID는 변수값이 int 이고 연속된 숫자로 되어 
+# 있는 것으로 봐서 primary key 로 생각된다. county는 변수값이 character 이고 "ADAMS"로 부터 시작된다. 그 밑으로도 같은 방식으로 각 변수
+#들의 속성과 몇개의 값을 보여 주고 있다. chr은 문자, num 은 소수점이 있는 실수, int 는 소수점이 없는 정수를 나타낸다.
+
+summary(midwest) # summary는 28개 변수의 요약 통계량을 보여준다. 숫자로된 여섯가지의 요약 통계량을 보여주고 , 문자로 된 변수는 
+#요약 통계량을 구할 수 없으니 값의 개수와 변수의 속성을 보여준다. 인구밀도를 나타내는 popdensity를 보면 최소값은 85.05,
+#최대값은 88018.40, 평균은 3097.74, 중위값 1156.21을 중심으로 1st Quantile  622.41 과  3rd Quantile  2330.00 사이에 인구밀도 값이 
+#몰려 있다.  
 
 
 
+#options(encoding='-8')
 
 
 
