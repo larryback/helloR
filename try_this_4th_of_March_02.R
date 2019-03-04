@@ -12,8 +12,8 @@ midwest = as.data.frame(ggplot2::midwest)
 head(midwest) # Raw 데이터 앞부분 확인. 6행의 데이타와 28개 필드로 구성
 tail(midwest) # Raw 데이터 뒷부분 확인. 6행의 데이타와 28개 필드로 구성
 
-View(midwest) # View 창을 통해서 원자료를 직접 보여 줍니다. 
-dim(midwest)  # 데이타 프레임이 437행 28열로 구성 되어 있습니다. 
+View(midwest) # View 창을 통해서 원자료를 직접 보여 준다. 
+dim(midwest)  # 데이타 프레임이 437행 28열로 구성 되어 있다. 
 
 str(midwest)  # midwest 데이터가 데이터 프레임이고 437개 관측치, 28개 변수로 구성되어 있다. PID는 변수값이 int 이고 연속된 숫자로 되어 
 # 있는 것으로 봐서 primary key 로 생각된다. county는 변수값이 character 이고 "ADAMS"로 부터 시작된다. 그 밑으로도 같은 방식으로 각 변수
