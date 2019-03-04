@@ -41,6 +41,9 @@ midwest_new = rename(midwest_new, asian = popasian )
 
 midwest_new$asianpct = midwest_new$asian/midwest_new$total * 100
 hist(midwest_new$asianpct)
+qplot(midwest_new$asianpct)
+#일리노이주 Du Page 와 Champaign county에 각각 5.070%, 4.642% 로 아시아계 사람들이 몰려 있다.  
+
 
 
 #6 아시아계 인구 백분율(asianpct)의 전체 평균을 구하고, 평균을 초과하면 "lg", 그 외는 "sm"을 부여하는 파생변수(asianrate)를 추가하는 코드를 작성하시오.
