@@ -363,3 +363,10 @@ mpg = as.data.frame(ggplot2::mpg)
 str(mpg)
 View(mpg)
 summary(mpg)
+
+midwest = as.data.frame(ggplot2::midwest)
+summary(midwest)
+
+## ggplot2::mpg####
+
+

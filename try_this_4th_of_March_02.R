@@ -1,38 +1,3 @@
-#1 mpg 데이터에서 통합 연비(도시와 고속도로)가 높은 순으로 출력하시오.
-
-mpg = as.data.frame(ggplot2::mpg)
-library(ggplot2)
-library(dplyr)
-
-?mpg
-mpg$total = (mpg$cty + mpg$hwy)/2  # 통합연비 변수
-
-mpg %>% arrange(desc(mpg$total)) # 통합연비가 높은 순으로 출력
-
-
-#2 mpg 데이터에서 생산연도별 연료 종류에 따른 통합연비를 연도순으로 출력하시오.
-
-mpg = as.data.frame(ggplot2::mpg)
-library(ggplot2)
-library(dplyr)
-
-mpg$total = (mpg$cty + mpg$hwy)/2  # 통합연비 변수
-#mpg_new = mpg[mpg$year, mpg$fl, order(mpg$total),]
-aggregate(total ~ (mpg$year + mpg$fl))
-
-
-
-#aggregate(cbind(disp,wt)~ carb + gear, data= mtcars, mean)
-
-
-
-
-
-
-
-
-
-
 #3 midwest 데이터를 data.frame으로 불러온 후, 데이터의 특징을 설명하시오.
 
 mpg = as.data.frame(ggplot2::mpg)
@@ -81,7 +46,7 @@ hist(midwest_new$asianpct)
 #6 아시아계 인구 백분율(asianpct)의 전체 평균을 구하고, 평균을 초과하면 "lg", 그 외는 "sm"을 부여하는 파생변수(asianrate)를 추가하는 코드를 작성하시오.
 
 mean(midwest_new$asianpct)
-  ##[1] 0.4872462
+##[1] 0.4872462
 midwest_new$group = ifelse(midwest_new$asianpct > 0.4872462, "lg", "sm")
 
 #7 "lg"와 "sm"에 해당하는 지역이 얼마나 되는지 빈도 막대그래프(qplot)을 그려보시오.
