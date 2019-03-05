@@ -7,6 +7,7 @@ summary(mpg)
 
 library(dplyr)
 library(ggplot2)
+library(psych)
 midwest = as.data.frame(ggplot2::midwest)
 
 head(midwest) # Raw 데이터 앞부분 확인. 6행의 데이타와 28개 필드로 구성
@@ -24,7 +25,11 @@ summary(midwest) # summary는 28개 변수의 요약 통계량을 보여준다. 
 #최대값은 88018.40, 평균은 3097.74, 중위값 1156.21을 중심으로 1st Quantile  622.41 과  3rd Quantile  2330.00 사이에 인구밀도 값이 
 #몰려 있다.  
 
-
+###
+describe(midwest[,4:26],na.rm = T)
+colnames(midwest)
+head(midwest)
+aggregate( data = midwest, cbind(poptotal, popdensity, popasian)-state, mean)
 
 #options(encoding='-8')
 
@@ -43,7 +48,7 @@ midwest_new$asianpct = midwest_new$asian/midwest_new$total * 100
 hist(midwest_new$asianpct)
 qplot(midwest_new$asianpct)
 #일리노이주 Du Page 와 Champaign county에 각각 5.070%, 4.642% 로 아시아계 사람들이 몰려 있다.  
-
+plot(midwest_new$asianpct)
 
 
 #6 아시아계 인구 백분율(asianpct)의 전체 평균을 구하고, 평균을 초과하면 "lg", 그 외는 "sm"을 부여하는 파생변수(asianrate)를 추가하는 코드를 작성하시오.
