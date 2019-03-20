@@ -985,3 +985,281 @@ while(TRUE) {
 
 x
 
+#data = read.csv("성적.csv")
+#options(encoding='UTF-8')
+library(ggplot2)
+mpg = as.data.frame(ggplot2::mpg)
+
+t = c(5, 7, 2, 8, 20, 11, 19)
+t[order(t)]
+t[order(t, decreasing = T)]
+smdt = data.frame(stuno = 1:5, 
+                  Korean=sample(60:100, 5),
+                  English=sample((5:10) * 10, 5),
+                  Math=sample(50:100, 5))
+smdt_new01[order(smdt_new01$avg, -smdt_new01$Korean),]
+rev(t[order(t)])
+sort(t)
+sort(smdt$avg, decreasing=T)
+t = c(1:5, NA, 7, NA, 9, 10)
+m1 = m2 = m3 = matrix(c(1:3, NA, 9:3, NA, 1:3), nrow=3)
+is.na(t)  
+table(is.na(t))
+t[is.na(t)]
+mean(t)
+mean(t, na.rm = T)
+t = ifelse(is.na(t), 0, t)
+m1[is.na(m1)] = 0  
+m2[is.na(m2[,2]), 2] = 55 
+
+
+##dplyr##
+head(data)
+library(dplyr)
+dplyr::rename(data, 수학 = math)
+dplyr::rename(data, 국어 = kor)
+library(ggplot2)
+attach(data)
+mean(국어)
+
+
+detach(data)
+with(data, mean(국어))
+library(dplyr)
+data = dplyr::rename(data,  math = 수학)
+data %>% filter(group == 'C조')
+
+data %>% filter(group == 'C조' & 수학 > 90)
+
+data %>% filter(group %in% c('A조', 'C조'))
+
+
+data %>% filter(math>95) %>% select(학번, 국어, 영어, math)
+data %>%
+  filter(math > 95) %>% 
+  select(학번, 국어, 영어, math) %>%
+  head
+head(data)
+data = dplyr::rename(data, art=예체)
+data = dplyr::rename(data, kor=국어, sci=과학, eng=영어, art=예체)
+data = dplyr::rename(data, stuno = 학번, cls = 반, gen = 성별)
+data %>% arrange(math) %>% head
+data %>% arrange(desc(math)) %>% head
+data %>% arrange(math, kor,eng) %>% head
+data = data %>% mutate(subTotal = kor + eng + math)
+data = data %>%
+  mutate(subTotal = kor + eng + math,
+         subMean = round((kor + eng + math) / 3))
+data %>%
+  mutate(kor_eng = kor + eng) %>%
+  arrange(desc(kor_eng)) %>%
+  head
+data %>% summarize(t = mean(math))
+data %>% dplyr::summarize(t = mean(math))
+
+data %>%
+  group_by(cls) %>%
+  summarise(mean_math = mean(math),
+            sum_math = sum(math),
+            medi_math = median(math),
+            n_math = n()) %>%
+  arrange(desc(mean_math))
+sales = cbind( data.frame(no=1:12, year=2016:2019), 
+                 matrix(round(runif(144), 3) * 100000, ncol=12, dimnames = list(NULL, month.abb)) )
+left_join(sales, dfsum, by=c('year' = 'year'))
+right_join(sales, dfsum, by=c('year' = 'year'))
+inner_join(sales, dfsum, by=c('year' = 'year', 'no' = 'yno'))
+semi_join(sales, dfsum, by=c('year' = 'year', 'no' = 'yno'))
+fullanti_join(sales, dfsum, by=c('no' = 'yno'))
+join(sales, dfsum, by=c('year' = 'year', 'no' = 'yno'))
+anti_join(sales, dfsum, by=c('no' = 'yno'))
+topsale4 = sales[1:4,] %>% select(year, Jan, Apr, Jul, Oct)
+top4 = sales[5:8,] %>% 
+  select(1:4, year, Jan, Apr, Jul, Oct) %>% 
+  rename(yno=no, Q1=Jan, Q2=Apr, Q3=Jul, Q4=Oct)
+bind_rows(dfsum, topsale4)
+bind_rows(dfsum, top4)
+bind_rows(dfsum, top4, .id = 'group')
+bind_cols(dfsum, top4)
+cbind(dfsum, top4)
+bind_cols(dfsum, top4) %>% select(-year1, -yno1, -Feb)
+
+prePar = par(col='red')
+
+
+
+plot(smdt)
+par(prePar)
+plot(data$eng)
+
+
+plot(x=1, y=1)
+> plot(x=1:10, y=1:10)
+> plot(sin, -pi, pi * 3)
+> plot(smdt$stuno, smdt$Korean)
+> plot(smdt$stuno, smdt$Korean, col='#0000FF')   # col='red'
+> colors()   
+
+plot(x = smdt$stuno, y = smdt$Korean,
+     col = '#0000FF',
+     cex = 3,
+     type = 'l',         # p, l, b, c, o, s
+     xlim = c(-0.5, 5.5),
+     ylim = c(50, 100),
+     pch = 8,                         # > ?points
+     xlab = '학번', ylab = '국어',
+     main = '그래프 타이틀')
+
+# 막대그래프
+
+t = data %>% filter(eng > 90) %>% select('cls', 'gen') %>% table
+
+barplot(t,
+        beside = T,
+        border = 'dark blue',
+        density = 30,
+        angle = 15 + 10*1:2,
+        xlab = '학급별 성별', ylab = '영어',
+        legend=rownames(t),
+        col=heat.colors(4))
+
+
+barplot(t,
+        beside = T,
+        horizon = T,
+        border = 'dark blue',
+        density = 30,
+        las = 1,
+        cex.name = 0.8,
+        xlime = c(0, 13),
+        main ='영어 성적상위권 학생',
+        angle = 15 + 10*1:2,
+        xlab = '학급별 성별', ylab = '영어',
+        legend=rownames(t),
+        col=heat.colors(4))
+
+boxplot(data$kor)
+boxplot(kor~cls, data=data, col='lightblue')
+boxplot(kor~gen, data=data, col='lightblue')
+
+data
+
+
+hist(data$kor, col="gray", labels=T, breaks=10)
+
+curve(sin, -2 * pi, 3 * pi,
+      xname='x', xlab = 'TT',
+      n=200, type='p',
+      xlim=c(-10,15), ylim=c(0,10))
+
+      
+d = data %>% filter(kor > 90) %>% select('cls')
+pie(table(d))
+pie(table(d), clockwise = T)
+pie(table(d), clockwise = T, col=c('red', 'purple', 'green', 'cyan'))
+      
+#시각화
+library(ggplot2)
+
+ggplot(data =mpg, aes(x = displ, y = hwy)) + geom_point() + xlim(3,6) + ylim(10, 30)
+
+ggplot(data = mpg, aes(x = cty, y = hwy)) + geom_point()
+
+ggplot() + geom_point(data=smdt, aes(x=stuno, y=Korean))
+ggplot() +
+  geom_point(data=smdt,
+             aes(x=stuno, y=Korean),
+             color='blue', size = 5)
+      
+
+ggplot() +
+  geom_point(data=smdt,
+             aes(x=stuno, y=Korean,
+             color='red', size = 5)
+
+d = data %>% filter(stuno >= 30000)
+d             
+ggplot(d, aes(cls, kor)) +
+  geom_point(aes(color=cls, size=kor), 
+             alpha=0.3)
+
+ggplot(data=smdt) +
+  geom_point(aes(x=stuno, y=Korean, 
+                 color=stuno, size=stuno))
+
+ggplot(d %>% filter(kor > 80), aes(cls,kor) ) + 
+  geom_point(aes(color=cls, size=kor), alpha=0.3)
+
+#line
+d2 = mpg %>% group_by(manufacturer, displ) %>% 
+  summarise(m1 = mean(cty), m2 = mean(hwy))
+
+
+
+head(mpg)
+
+
+d2
+ggplot(d2, aes(x=displ)) + 
+  geom_line(aes(y=m1, color='cty')) +
+  geom_line(aes(y=m2, color='hwy'), size=1) +
+
+ 
+  ggplot(mpg, aes(displ)) +
+  geom_histogram(aes(fill=class), 
+                 binwidth = .3,     # 또는  bins = 5
+                 col='black',       # line color
+                 size=.1) +         # line size
+  labs(title = 'Title', subtitle = 'Sub Title')
+
+
+
+   
+  
+  ggplot(mpg, aes(manufacturer)) +
+  geom_bar(aes(fill=class),
+           width = 0.5) +
+  theme(axis.text.x = element_text(angle=45,       # 글씨의 기울기
+                                   vjust=0.6)) +   # 글씨의 하단 맞춤(띄우기)
+  scale_fill_discrete(name = "class") +      # legend
+  labs(title = 'Title', subtitle = 'Sub Title')
+
+  install.packages("dplyr")
+  install.packages("magrittr")
+  library(magrittr) # need to run every time you start R and want to use %>%
+  library(dplyr)
+  library(ggplot2)
+  
+  
+  
+  ggplot(mpg, aes(cty)) +
+    geom_density(aes(fill=factor(cyl)), alpha=0.8) +
+    labs(title="밀도그래프", subtitle = "실린더수에 따른 시내연비의 밀도그래프",
+         caption="Source: ggplot2::mpg",
+         x = "도시 연비",
+         fill = "실린더수")
+  
+  
+  install.packages('gridExtra')
+  library(gridExtra)
+
+  
+  g3 = ggplot(mpg, aes(manufacturer)) +
+    geom_bar(aes(fill=class),
+             width = 0.7) +
+    theme(axis.text.x = element_text(angle=45,
+                                     vjust=0.6)) +
+    labs(title = 'Title', subtitle = 'Sub Title')
+  
+  
+  g4 = ggplot(mpg, aes(cty)) +
+    geom_density(aes(fill=factor(cyl)), alpha=0.8) +
+    labs(title="밀도그래프", subtitle = "실린더수에 따른 시내연비의 밀도그래프",
+         caption="Source: ggplot2::mpg",
+         x = "도시 연비",
+         fill = "실린더수")
+  
+  
+  grid.arrange(g4, g3, ncol=2)
+  
+  

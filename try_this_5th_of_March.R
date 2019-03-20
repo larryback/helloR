@@ -1,7 +1,7 @@
 # 1. data$group 컬럼에 A조~C조 랜덤으로 160명씩 고르게 분포시키시오.
 #data_new = data.frame('group', 'A', 'B', 'C')
 #data_new$A = runif(n=160, mind = 10101, max = )
-data$group = sample(c('A', 'B', 'c'), size=nrow(data), replace=T)
+data$group = sample(c('A조', 'B조', 'c조'), size=nrow(data), replace=T)
 
 #2. fibonacci.R 파일을 작성하고 console에서 실행하시오.
 
@@ -24,7 +24,11 @@ smdt_new01["avg"] = avg
 #`no year Jan Feb … Dec` 형태로 만든 다음, 아래와 같이 출력하시오.
 library('reshape2')
 dfsum_1 = cbind( data.frame(no=1:4, year=2016:2019), 
-               matrix(round(runif(n = 48, min = 10000, max = 90000)) , ncol=12, dimnames = list(NULL, paste0('month', 1:12)))) 
+               matrix(round(runif(n = 48, min = 10000, max = 90000)) , ncol=12, dimnames = list(NULL, month.abb))) 
+
+#dfsum_1 = cbind( data.frame(no=1:4, year=2016:2019), 
+#                 matrix(paste(round(runif(48, 3) * 10000, "m$", sep = '')) , ncol=12, dimnames = list(NULL, month.abb))) 
+
 
 melt(data=dfsum_1[,2:14], id.vars = "year")
 #melt(data=dfsum[,2:6], id.vars = "year")
