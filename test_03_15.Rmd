@@ -1,0 +1,94 @@
+---
+title: '빅데이터 분석 시각화 포폴 #1'
+author: "성재현"
+date: "2019년 3월 14일"
+output: html_document
+---
+###1. mpg데이터에서 연도별 배기량에 따른 통합연비를
+###꺽은선으로 그리시오.
+###(단, cty는 회색, hwy는 파란색, 2008년은 굵은 선으로 표현하시오)
+
+
+```{r}
+d4 = mpg %>% group_by(year, displ) %>% summarise(m1 = mean(cty), m2 = mean(hwy))
+str(d4)
+summary(d4)
+head(d4)
+ggplot(d4, aes(x=displ)) + 
+  geom_line(data = d4 %>% filter(year==1999), aes(y=m1, color='1999 cty')) +
+  geom_line(data = d4 %>% filter(year==1999), aes(y=m2, color='1999 hwy')) +
+  geom_line(data = d4 %>% filter(year==2008), aes(y=m1, color='2008 cty'), size=1) +
+  geom_line(data = d4 %>% filter(year==2008), aes(y=m2, color='2008 hwy'), size=1) +
+  scale_colour_manual("", breaks = c("1999 cty", "1999 hwy", "2008 cty", "2008 hwy"),
+                      values = c("gray", "pink", "blue", "darkblue")) +
+  xlab("배기량") +
+  scale_y_continuous("연비", limits = c(0, 50)) +
+  labs(title = '연도별 통합연비', subtitle = '(굵은선은 2008년)') 
+```
+
+
+###2. data(성적.csv) 데이터에서 국어 성적이 80점 이상인  학생들의 수를 성비가 보이도록 학급별로 막대그래프를 그리시오.
+
+
+```{r }
+library(ggplot2)
+#data = read.csv("성적.csv")
+load("data/data.rda")
+# options(encoding='utf-8')
+library(ggplot2)
+library(dplyr)
+
+d3=data %>%
+   filter(국어 > 80) %>% 
+   select(학번,반, 국어, 성별) 
+
+ggplot(d3, aes(반)) +
+  geom_bar(aes(fill=성별),
+           width = 0.5) +
+  theme(axis.text.x = element_text(angle=45,       # 글씨의 기울기
+                                   vjust=0.6)) +   # 글씨의 하단 맞춤(띄우기)
+  scale_fill_discrete(name = "성별") +      # legend
+  labs(title = '국어우수학생', subtitle =  '80점이상')
+
+```
+
+###3. 국어 성적이 95점 이상인 학생들의학급별 밀도그래프를 그리시오.
+
+
+
+
+```{r }
+
+
+library(ggplot2)
+#data = read.csv("성적.csv")
+load("data/data.rda")
+#options(encoding='utf-8')
+library(ggplot2)
+library(dplyr)
+
+
+
+ggplot(data[data$kor >= 95, ], aes(kor)) +
+  geom_density(aes(fill=factor(cls)), alpha = 0.5) + xlab('국어성적') +
+  labs(title = "반별 국어 우수 학생", subtitle = "국어성적 A+", 
+       fill='학급', caption = "기준점수 >= 95")
+```
+
+
+
+
+
+###4. midwest데이터에서 전체인구와  아시아계 인구의 관계를 알아보기 위한  그래프를 그리시오.
+###(단, 전체인구는 50만명 이하,    아시아계인구는 1만명 이하만 표시되게 하시오.
+
+```{r , warning = F, message = F}
+library(ggplot2)
+midwest = as.data.frame(ggplot2::midwest)
+ggplot(data = midwest, aes( x = poptotal, y = popasian )) +
+  geom_point() +
+  xlim(0, 500000) +
+  ylim(0, 10000)
+
+```
+

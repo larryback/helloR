@@ -1,4 +1,3 @@
-# factorial.R       #  3! = 1*2*3
 while(TRUE) {
   x = as.integer(readline(prompt = "Input the number: "))
   if (x < 0) break
@@ -15,3 +14,6 @@ while(TRUE) {
     print(paste("The factorial of", x, "is", f))
   } 
 }
+
+
+

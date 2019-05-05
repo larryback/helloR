@@ -8,14 +8,20 @@ library(stringi)
 library(tibble) 
 library('dplyr')
 chodata = rownames_to_column(USArrests, var = 'state')
+<<<<<<< HEAD
+=======
 
+>>>>>>> c4f9cde25e524ebf327f3be2b20fc44de2e45d4c
 chodata$state = tolower(chodata$state)
 
 usmap = map_data('state') 
 head(usmap)
 
+<<<<<<< HEAD
+=======
 install.packages("ggiraphExtra")
 
+>>>>>>> c4f9cde25e524ebf327f3be2b20fc44de2e45d4c
 ggiraphExtra::ggChoropleth()   
 devtools::install_github("cardiomoon/moonBook2")
 library(ggiraphExtra)
@@ -24,6 +30,41 @@ head(usmap)
 
 
 install.packages('mapproj')
+<<<<<<< HEAD
+
+
+library(ggiraphExtra)
+library(ggplot2)
+
+
+b1 = ggChoropleth(data=chodata,
+             aes(fill=Murder, map_id=state),
+             map = usmap,
+             title = '..',
+             reverse = F,
+             interactive = T)
+
+b2 = ggChoropleth(data=chodata,
+             aes(fill=Rape, map_id=state),
+             map = usmap,
+             title = '..',
+             reverse = F,
+             interactive = T)
+
+b3 = ggChoropleth(data=chodata,
+             aes(fill=Assault, map_id=state),
+             map = usmap,
+             title = '..',
+             reverse = F,
+             interactive = T)
+
+b4 = ggChoropleth(data=chodata,
+             aes(fill=UrbanPop, map_id=state),
+             map = usmap,
+             title = '..',
+             reverse = F,
+             interactive = T)
+=======
 install.packages('maps')
 
 library(ggiraphExtra)
@@ -57,6 +98,7 @@ b4 = ggChoropleth(data=chodata,
                   title = '..',
                   reverse = F,
                   interactive = T)
+>>>>>>> c4f9cde25e524ebf327f3be2b20fc44de2e45d4c
 install.packages('gridExtra')
 library(gridExtra)
 library(grid)
@@ -143,7 +185,10 @@ devtools::install_github("cardiomoon/kormaps2014")
 
 library(kormaps2014)
 
+<<<<<<< HEAD
+=======
 library(moonBook2)
+>>>>>>> c4f9cde25e524ebf327f3be2b20fc44de2e45d4c
 str(changeCode(korpop1))
 
 str(changeCode(kormap1))
@@ -152,7 +197,10 @@ str(changeCode(tbc))
 
 tbc
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> c4f9cde25e524ebf327f3be2b20fc44de2e45d4c
 str(changeCode(tbc))
 
 ggChoropleth(data = tbc, aes(fill = NewPts, map_id = code, tooltip = name), map = kormap1, interactive = T)

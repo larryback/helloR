@@ -1,0 +1,64 @@
+###  문항 2번
+
+## 1) 전교생의 국어성적과 영어성적에 대한 상관분석(Correlation)을 수행하시오.
+
+
+# 상관 분석(Correlation)
+#- 두 변수간의 상관(연관) 정도 분석
+#- 즉, x에 의해 y가 영향을 받는다.
+# 1. 데이터 준비 (배기량과 도시연비의 연관성 분석)
+
+library(ggplot2)
+library(dplyr)
+library(psych)
+
+load('data/data02.rda')
+data
+
+data %>% select(kor, eng) -> cdata
+
+# 2. 기술 통계 확인
+
+describe(cdata)
+
+# 3. 그래프로 데이터 확인하기
+pairs.panels(cdata)          # 연관계수 확인
+
+# 연관계수가 -0.02 로  국어를 잘하는 학생이 영어도 잘 한다는 보장은 없어 보인다. 
+
+# 4. 상관분석
+cor(cdata, use = "complete.obs",   # 결측치(NA) 제외
+    method = c("pearson"))         # 모수 통계  cf. 비모수(30개 미만)의 경우 spearman)
+# 5. 결과 그래프     x(eng)에 의해 y(kor)가 영향을 받는다
+plot(kor ~ eng, data=cdata)
+abline(lm(kor ~ eng, data=cdata), col='red')
+
+# 국어와 영어의 데이터가 고루 분포 되어 있어서 상관관계를 찾기가 어렵다. 
+
+## 2) mpg데이터의 displ, cyl, trans, cty, hwy 중
+##   1999년과 2008년 두 해의 고객 만족도가 0과 1이라고 했을 때,
+##   어떤 요소가 만족도에 많은 기여를 했는지 로지스틱 회귀분석하시오.
+
+# 1. 데이터 준비 : 1999년과 2008년 두 해의 만족도가 0과 1 → 영향을 준 요인은??
+unique(mpg$trans); unique(mpg$year);
+cdata3 = mpg %>%
+  mutate(trs = ifelse(substr(trans, 1, 4) == 'auto', 1, 0), 
+         y = ifelse(year == 1999, 0, 1)) %>%
+  select(y, displ, cyl, trs, cty, hwy)
+
+# 2. 기본 통계치 확인
+describe(cdata3)
+pairs.panels(cdata3)
+
+# 3. 분석
+glmdata = glm(y ~ displ+cyl+cty+hwy+trs, family = binomial, data=cdata3)
+summary(glmdata)  # Estimate: 기울기(비례/반비례), Pr: 0.05보다 작으면 영향이 있다
+orgpar = par(no.readonly = T)
+par(mfrow=c(2,2))
+plot(glmdata)
+par(orgpar)
+
+# displ(배기량)과  hwy(고속도로연비)에 * 가  있는 걸로 봐서 고객만족도에 기여를 한 것으로 보인다.
+
+# 4. coefficients(기울기+절편)와 confint(신뢰구간)로 LOR(Log Odd Ratio) 구하기
+round(exp(cbind(LOR = coef(glmdata), confint(glmdata))), 2)

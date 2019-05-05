@@ -1,27 +1,28 @@
-# take input from the user
-nterms = as.integer(readline(prompt="How many terms? "))
-# first two terms
-n1 = 0
-n2 = 1
-count = 2
-# check if the number of terms is valid
-if(nterms <= 0) {
-  print("Plese enter a positive integer")
-} else {
-  if(nterms == 1) {
-    print("Fibonacci sequence:")
-    print(n1)
-  } else {
-    print("Fibonacci sequence:")
-    print(n1)
-    print(n2)
-    while(count < nterms) {
-      nth = n1 + n2
-      print(nth)
-      # update values
-      n1 = n2
-      n2 = nth
-      count = count + 1
-    }
+# 0, 1, 1, 2, 3, 5...
+while(TRUE) {
+  x = as.integer(readline(prompt = "Input the count: "))
+  if (x <= 0) {
+    print("Thanks a lot!")
+    break
   }
+  
+  if (x == 1) {
+    print(0)
+    next
+  }
+  
+  p0 = 0
+  p1 = 1
+  ret = paste(p0, p1)
+  
+  while(x > 2) {
+    p = p0 + p1
+    ret = paste(ret, p)
+    p0 = p1
+    p1 = p
+    
+    x = x - 1
+  }
+  
+  print(ret)
 }

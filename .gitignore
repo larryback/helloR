@@ -2,3 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
+.httr-oauth
+twitter.R
+twitter_API_key.R
