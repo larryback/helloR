@@ -1,14 +1,15 @@
 ###########################  미국 전체의 밀생산량과  밀가격의 산점도 분석 #################  
 library(ggplot2)
 options(scipen = 100)
+setwd("/workspace/R/helloR")
 
 data01 = read.csv("data/price_table04.csv", sep = ",", stringsAsFactor = FALSE)
+
+
 
 head(data01, 10)
 str(data01)
 summary(data01)
-
-#mode(data01$wheat.production.by.bushel)="numeric"
 
 stem(data01$annual.avg.price.per.bushel)
 hist(data01$annual.avg.price.per.bushel)

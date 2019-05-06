@@ -38,78 +38,78 @@ hist(data01$annual.avg.price.per.bushel)
 
 boxplot(data01$annual.avg.price.per.bushel)
 
+박스플롯(상자그림)은 데이터의 분포를 직사각형의 상자 모양으로 표현한 그래프입니다. 상자 그림을 보면 데이터의 분포를 한 눈에 알 수 있습니다. 상자 그림에는 중심에서 멀리 떨어진 극단치가 점으로 표현되는데, 이를 이용해서 극단치의 기준을 정할 수 있습니다.  
+
+[상자 그림]	              [값]	          [설명]
+상자 아래 세로 점선 	    아랫수염	      하위0~25% 내에 해당하는 값
+상자 밑면	                1사분위수(Q1)	  하위 25% 위치 값
+상자 내 굵은 선	          2사분위수(Q2)	  하위 50% 위치 값(중앙값)
+상자 윗면	                3사분위수(Q3)	  하위 75% 위치 값
+상자 위 세로 점선	        윗수염	        하위75~100% 내에 해당하는 값
+상자 밖 가로선	          극단치 경계	    Q1, Q3 밖 1.5 IQR 내 최대값
+상자 밖 점 표식	          극단치	        Q1, Q3 밖 1.5 IQR을 벗어난 값
+
+※ 1.5 IQR은 사분위 범위(Q1~Q3 간 거리)의 1.5배를 의미합니다.
+
+
 
 
 library(gridExtra)
+library(plotly)
+
+g1=ggplot(data=data01, aes(x=year, y=annual.avg.price.per.bushel)) + geom_line(color="blue")+geom_point()
+
+ggplotly(g1)
+
+위 그림은 시간의 흐름에 따른 부셸당 밀의 연평균 가격을 파란색의 꺾은선 그래프로 나타내었다. 인터액티브 그래프로 그려졌기 때문에 검은색 점에 커서를 갖다 대면  해당년도의 밀의 연평균 가격을 알 수 있다.  단위는 US dollar 이다.
 
 
-g1=ggplot(data=data01, aes(x=year, y=annual.avg.price.per.bushel)) + geom_line()+geom_point()
-g2=ggplot(data=data01, aes(x=year, y=wheat.production.by.thousand.bushels)) + geom_line() + geom_point()
-grid.arrange(g1, g2, ncol=2)
+g2=ggplot(data=data01, aes(x=year, y=wheat.production.by.thousand.bushels)) + geom_line(color="red") + geom_point()
+
+ggplotly(g2)
 
 
-library(dygraphs)
-library(xts) 
+위 그림은 시간의 흐름에 따른 매년 미국 전체의 밀 생산량을 빨간색의 꺾은선 그래프로 나타내었다. 인터액티브 그래프로 그려졌기 때문에 검은색 점에 커서를 갖다 대면  해당년도의 미국 전체의 밀 생산량을 알 수 있다.  단위는 1000 bushel 이다.
 
-ue = xts(data01$annual.avg.price.per.bushel, order.by = data01$year)%>% dyRangeSelector()
 
-dygraph(ue)
 
-ue2 = xts(data01$wheat.production.by.thousand.bushels, order.by = data01$year)%>% dyRangeSelector()
 
-dygraph(ue2)
 
-grid.arrange(ue1, ue2, ncol=2)
 
+
+
+
+library(ggplot2)
+
+선형모형을 사용하여 회귀분석을 해보면 다음과 같다.
+
+fit = lm( annual.avg.price.per.bushel ~ wheat.production.by.thousand.bushels, data = data01)
+summary(fit)
+
+회귀분석 결과 Coefficients: 부분을 살펴보자. y절편(Intercept)은 1003.06553546, 기울기는 -0.00037331 이다. p값(p-value)은 0.000193 로 매우 낮다. 즉 몸무게(파운드)와 키(인치)는 다음과 같은 관계가 성립한다.
+
+annual.avg.price.per.bushel = 1003.06553546  -0.00037331 × wheat.production.by.thousand.bushels
+기울기의 값이 마이너스이므로 그래프로 그리면 우하향하는 직선일 것이다.  그리고 밀의 생산량과 가격 사이에는 반비례 관계가 성립한다. 즉, 수요/공급의 법칙이 성립한다.  
 
 
 cor.test(data01$wheat.production.by.thousand.bushels, data01$annual.avg.price.per.bushel)
 
-library(ggplot2)
-
-#fit = lm(annual.avg.price.per.bushel ~ Baltic.Dry.Index, data = data01)
-
-#plot (data01$annual.avg.price.per.bushel ~ data01$Baltic.Dry.Index)
-#lines(lowess(data01$annual.avg.price.per.bushel ~ data01$Baltic.Dry.Index))
-
-fit = lm(annual.avg.price.per.bushel ~ wheat.production.by.thousand.bushels, data = data01)
+상관분석 결과 상관계수(r) 값은 -0.6295909이며 이 값의 제곱은 0.3964로 회귀분석결과에서 나온 Multiple R-squared 값과 정확히 일치한다. 
 
 
-summary(fit)
+#ggplot(data01, aes(x=annual.avg.price.per.bushel, y=wheat.production.by.thousand.bushels)) + geom_point() + stat_smooth(method = "lm")
 
-coef(summary(fit))
-
-co = coef(summary(fit))
-
-co[, 1]
-
-co[, 4]
-
-predict(fit)
-
-summary(fit)
+ggplot(data01, aes(x=wheat.production.by.thousand.bushels, y=annual.avg.price.per.bushel)) + geom_point() + stat_smooth(method = "lm")
 
 
-#37.2851 + (-5.3445)*4.5
-
-#newcar = data.frame(wt=4.5)
-#predict(fit, newcar)
-
-#library(ggplot2)
-#ggplot(data01, aes(x=Baltic.Dry.Index, y=annual.avg.price.per.bushel)) + geom_point() + stat_smooth(method = "lm")
-
-ggplot(data01, aes(x=annual.avg.price.per.bushel, y=wheat.production.by.thousand.bushels)) + geom_point() + stat_smooth(method = "lm")
-
-# 95% 신뢰구간  
-
-# + theme(axis.text.x = element_text(angle=45, vjust=0.6) # 글씨의 기울기
+ 
 
 library(plotly)
 
-#t = ggplot(data01, aes(x=Baltic.Dry.Index, y=annual.avg.price.per.bushel)) + geom_point() + stat_smooth(method = "lm", level = 0.99)
 
-t = ggplot(data01, aes(x=annual.avg.price.per.bushel, y=wheat.production.by.thousand.bushels)) + geom_point() + stat_smooth(method = "lm", level = 0.99)
 
-# level = 0.99  99% 신뢰구간 
+t=ggplot(data01, aes(x=wheat.production.by.thousand.bushels, y=annual.avg.price.per.bushel)) + geom_point() + stat_smooth(method = "lm", level=0.95)
 
 ggplotly(t)
+
+이제 위에서 분석한 결과를 그림으로 그려보면 위와 같이 나오는데 예상한 대로 우하향하는 직선으로 반비례 관계를 보여주고 있다.  짙은 회색으로 된 구간이 그려져 있는데,  모수(평균)이 이 구간에 있을 확률이 95%이다. (95% 신뢰구간) 
