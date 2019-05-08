@@ -10,7 +10,7 @@
 
 ## 2. 방식
 
-분석 방식은 상관분석을 통해서 두 변수가 서로 관련이 있는지 확인해 볼 것이다. 또한 상관 분석을 통해 도출한 상관계수(Correlation Coefficient)로 두 변수 사이가 얼마나 관련되어 있는지 , 관련성의 정도를 파악할 것이다.  상관계수는 -1 ~ +1 사이의 값을 지니고 있고 1에 가까울수록 관련성이 크다는 것을 의미한다.  
+분석 방식은 상관분석을 통해서 두 변수가 서로 관련이 있는지 확인해 볼 것이다. 또한 상관 분석을 통해 도출한 상관계수(Correlation Coefficient)로 두 변수 사이가 얼마나 관련되어 있는지 , 관련성의 정도를 파악할 것이다.  상관계수(r)는 -1 ~ +1 사이의 값을 지니고 있고 1에 가까울수록 관련성이 크다는 것을 의미한다.  
 
 •	Exactly –1. A perfect downhill (negative) linear relationship
 •	–0.70. A strong downhill (negative) linear relationship

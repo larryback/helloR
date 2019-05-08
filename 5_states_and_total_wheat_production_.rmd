@@ -1,0 +1,125 @@
+## 2. 캔사스 주를 포함한 5개 주요 밀 생산 주의 밀 생산량과 미국전체의 밀 생산량과의 상관관계 – “캔사스 주에 흉년이 들면 밀 가격이 오를까? 
+
+
+미국 내에서 밀을 가장 많이 생산하는 5개주는 어느 곳일까? 다음의 링크를 따라가면 답을 알 수 있다. https://www.statista.com/statistics/190376/top-us-states-in-wheat-production/
+
+캔사스, 노스 다코타, 몬타나, 워싱턴, 오클라호마 주이다. 
+
+
+```{r}
+library(ggplot2)
+options(scipen = 100)
+library(gridExtra)
+library(plotly)
+
+```
+
+
+```{r}
+data03 = read.csv("data/historical_wheat_production_by_state.csv", sep = ",", stringsAsFactor = FALSE)
+
+```
+
+
+
+```{r}
+head(data03, 10)
+
+```
+
+head는 상위 10개의 데이터를 항목별로 보여준다.  year는 년도 Kansas, Montana, N. Dakota, Washington, Oklahoma 이렇게 다섯 개 주가 표시 되어 있고 단위는 백만 bushel 이라서 1991년 Kansas 주 363.0 은 실제로 363,000,000 bushel 이다.  five.state.total 은 다섯 개 주의 밀 생산량을 합산한 것이다. total.wheat.production 은 미국 전체의 밀 생산량이다.
+
+```{r}
+str(data03)
+
+```
+
+
+str()은 각 변수의 속성에 대해서 알려준다. data01은 데이터 프레임이고 , 31개의 관측치, 10개 변수로 구성되어 있다는 걸 알 수 있다.  year, Kansas, Montana, N.Dakota, Washington,  Oklahoma 이렇게 5개 주의 연도별 밀 생산량을 표시하고 있다. five.state.total 은 5개 밀 생산량의 총합이고  total.wheat.production 은 미국 전체의 밀 생산량이다. 단위는 백만 bushel 이다.
+
+
+```{r}
+summary(data03)
+
+```
+5개 각 주의  밀의 최소 생산량, 제1사분위수, 제2사분위수(중앙값), 평균, 제3사분위수는 , 최고가격을 표시하고 있다. 그리고  5개 주의 밀생산량 총합과  미국 전체의 밀생산량에 대해서 마찬가지이다.
+
+
+```{r}
+stem(data03$five.state.total)
+hist(data03$five.state.total)
+boxplot(data03$five.state.total)
+
+stem(data03$total.wheat.production)
+hist(data03$total.wheat.production)
+boxplot(data03$total.wheat.production)
+
+```
+
+
+
+five.state.total 과 total.wheat.production 의  stem() , hist(), boxplot() 을 살펴 봤지만 정상으로 보이고 극단치는 없었다. 
+
+
+Null Hypothesis( 귀무가설: Ho 라고  쓴다. 검정 당사자가 타파하거나 기각시키려고 하는 가설입니다.)
+
+Alternative Hypothesis (대립가설: Ha 라고 쓴다. 귀무가설에 반대되는 가설로 연구와 실험을 통해서 입증, 규명하고자 하는 가설이다. 즉, 대립 가설은 검정 당사자가 참이라고 믿거나 참으로 증명되기를 바라는 것입니다.)
+
+귀무가설과 대립가설은  수학적으로 완전히 반대 상태에 있다.  즉, 두 가지의 가능성 만이 있고  하나가 참이면 다른 하나는 자동적으로 거짓이 된다. 
+
+Level of Confidence(신뢰도): 신뢰도(C)란  일관되고 재현이 가능한(replicable) 측정이 존재하는지 평가하는 기준이다. C-95%, C-99% 라는 식으로 표현한다. 
+
+Level of Significance(유의수준): 유의수준(알파a)이란 오류를 허용할 범위를 말하며 α = 1 – C 가 성립한다.  그래서 LOC(신뢰도)가 95% 일 때 α = 1 – C → α = 1 – 0.95 따라서 α = 0.05 가 된다.
+
+Ho(귀무가설): 미국 전체의 밀 생산량과 5개 주요 밀 생산 주의 밀 생산량은 비례하지 않는다. 
+
+Ha(대립가설): 미국 전체의 밀 생산량과 5개 주요 밀 생산 주의 밀 생산량은 비례한다.
+
+
+선형모형을 사용하여 회귀분석을 해보면 다음과 같다.
+
+```{r}
+fit = lm(total.wheat.production ~ five.state.total, data = data03)
+
+summary(fit)
+
+```
+
+
+회귀분석 결과  Coefficients: 부분을 살펴보자. y절편(Intercept)은  534.3855 , 기울기는  1.4717 이다. p값(p-value)은 0.00000000835 로 매우 낮다. 즉 total.wheat.production 와 five.state.total 는 다음과 같은 관계가 성립한다.
+
+total.wheat.production = 534.3855 + 1.4717 × five.state.total
+
+기울기의 값이 플러스이므로 그래프로 그리면 우상향하는 직선일 것이다.  그리고 밀의 생산량과 가격 사이에는 비례 관계가 성립한다.
+
+
+```{r}
+cor.test(data03$total.wheat.production, data03$five.state.total)
+
+```
+
+상관분석 결과 상관계수(r) 값은 0.8527005 이며 이 값의 제곱은 0.7271 로 회귀분석결과에서 나온 Multiple R-squared 값과 정확히 일치한다. P-Value 는 0.000000008354 로 매우 작다.  0.05보다 작으므로 귀무가설을 기각하고 대립가설을 채택한다. 따라서 밀의 생산량과 가격 사이에는 비례 관계가 성립한다
+
+
+```{r}
+ggplot(data03, aes(x=five.state.total, y=total.wheat.production)) + geom_point() + stat_smooth(method = "lm")
+
+```
+
+
+
+```{r}
+t = ggplot(data03, aes(x=five.state.total, y=total.wheat.production)) + geom_point() + stat_smooth(method = "lm", level = 0.95)
+ggplotly(t)
+
+```
+
+이제 위에서 분석한 결과를 그림으로 그려보면 위와 같이 나오는데 예상한 대로 우상향하는 직선으로 비례 관계를 보여주고 있다. 아래 그림은 인터액티브 그래프로 그렸다.  짙은 회색으로 된 구간이 그려져 있는데,  모수(평균)가 구간에 있을 확률이 95%이다. (95% 신뢰구간)
+
+따라서, 캔사스 주에  밀농사에  흉년이 들면  밀가격은 오른다. 
+
+
+
+
+
+

@@ -16,11 +16,17 @@ hist(data01$annual.avg.price.per.bushel)
 boxplot(data01$annual.avg.price.per.bushel)
 
 library(gridExtra)
-
+library(plotly)
 
 g1=ggplot(data=data01, aes(x=year, y=annual.avg.price.per.bushel)) + geom_line()+geom_point()
+
+
+
 g2=ggplot(data=data01, aes(x=year, y=wheat.production.by.thousand.bushel)) + geom_line() + geom_point()
-grid.arrange(g1, g2, ncol=2)
+
+
+
+#grid.arrange(g1, g2, ncol=2)
 
 install.packages('dygraphs')
 library(dygraphs)
@@ -142,6 +148,11 @@ data03 = read.csv("data/historical_wheat_production_by_state.csv", sep = ",", st
 head(data03, 10)
 str(data03)
 summary(data03)
+
+
+stem(data03$five.state.total)
+hist(data03$five.state.total)
+boxplot(data03$five.state.total)
 
 
 stem(data03$total.wheat.production)
@@ -288,6 +299,8 @@ hist(data06$production)
 boxplot(data06$production)
 
 library(ggplot2)
+
+
 
 fit = lm(production ~ temperature, data = data06)
 

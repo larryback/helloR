@@ -8,11 +8,11 @@ data01 = read.csv("data/price_table04.csv", sep = ",", stringsAsFactor = FALSE)
 
 head(data01, 10)
 
-head는 상위 10개의 데이터를 항목별로 보여줍니다. 
+head는 상위 10개의 데이터를 항목별로 보여준다. 
 
 str(data01)
 
-str()은 각 변수의 속성에 대해서 알려줍니다. data01은 데이터 프레임이고 , 30개의 관측치, 11개 변수로 구성되어 있다는 걸 알 수 있습니다.  두 번째 행의 year number 는 세 번째 행의 year 에 대한 id 이고 네 번째 행은 bushel(27.2kg) 당 밀의 연평균 가격을, 다섯 번째 행은 매년 미국 전체의 밀 생산량을 나타내는 단위로 1000부터 시작한다.  2059557은 실제로 2,059,557,000 bushel을 가리킨다. 
+str()은 각 변수의 속성에 대해서 알려준다. data01은 데이터 프레임이고 , 30개의 관측치, 11개 변수로 구성되어 있다는 걸 알 수 있다.  두 번째 행의 year number 는 세 번째 행의 year 에 대한 id 이고 네 번째 행은 bushel(27.2kg) 당 밀의 연평균 가격을, 다섯 번째 행은 매년 미국 전체의 밀 생산량을 나타내는 단위로 1000 bushel부터 시작한다.  2059557은 실제로 2,059,557,000 bushel을 가리킨다. 
 
 summary(data01$annual.avg.price.per.bushel)
 
@@ -30,15 +30,15 @@ wheat.production.by.thousand.bushels 은 매년 미국 전체의 밀 생산량�
 
 stem(data01$annual.avg.price.per.bushel)
 
-stem함수는 자료값을  나무의 줄기와 잎처럼 그려줍니다. 
+stem함수는 자료값을  나무의 줄기와 잎처럼 그려준다. 
 
 hist(data01$annual.avg.price.per.bushel)
 
-히스토그램은 값의 빈도를 막대길이로 표현한 그래프입니다. 히스토그램을 보면 어떤 값을 지닌 데이터가 많은지 전반적인 분포를 알 수 있습니다.  X축에는 변수의 값이 표현되어 있고 Y축에는 각 계급구간의 빈도가 표현되어 있습니다.  위 히스토그램의 경우 100~200달러 사이에 자료값이 집중되어 있다.
+히스토그램은 값의 빈도를 막대길이로 표현한 그래프이다. 히스토그램을 보면 어떤 값을 지닌 데이터가 많은지 전반적인 분포를 알 수 있다.  X축에는 변수의 값이 표현되어 있고 Y축에는 각 계급구간의 빈도가 표현되어 있다.  위 히스토그램의 경우 100~200달러 사이에 자료값이 집중되어 있다.
 
 boxplot(data01$annual.avg.price.per.bushel)
 
-박스플롯(상자그림)은 데이터의 분포를 직사각형의 상자 모양으로 표현한 그래프입니다. 상자 그림을 보면 데이터의 분포를 한 눈에 알 수 있습니다. 상자 그림에는 중심에서 멀리 떨어진 극단치가 점으로 표현되는데, 이를 이용해서 극단치의 기준을 정할 수 있습니다.  
+박스플롯(상자그림)은 데이터의 분포를 직사각형의 상자 모양으로 표현한 그래프이다. 상자 그림을 보면 데이터의 분포를 한 눈에 알 수 있다. 상자 그림에는 중심에서 멀리 떨어진 극단치가 점으로 표현되는데, 이를 이용해서 극단치의 기준을 정할 수 있다.  
 
 [상자 그림]	              [값]	          [설명]
 상자 아래 세로 점선 	    아랫수염	      하위0~25% 내에 해당하는 값
@@ -49,7 +49,7 @@ boxplot(data01$annual.avg.price.per.bushel)
 상자 밖 가로선	          극단치 경계	    Q1, Q3 밖 1.5 IQR 내 최대값
 상자 밖 점 표식	          극단치	        Q1, Q3 밖 1.5 IQR을 벗어난 값
 
-※ 1.5 IQR은 사분위 범위(Q1~Q3 간 거리)의 1.5배를 의미합니다.
+※ 1.5 IQR은 사분위 범위(Q1~Q3 간 거리)의 1.5배를 의미한다.
 
 
 
@@ -86,26 +86,23 @@ library(ggplot2)
 fit = lm( annual.avg.price.per.bushel ~ wheat.production.by.thousand.bushels, data = data01)
 summary(fit)
 
-회귀분석 결과 Coefficients: 부분을 살펴보자. y절편(Intercept)은 1003.06553546, 기울기는 -0.00037331 이다. p값(p-value)은 0.000193 로 매우 낮다. 즉 몸무게(파운드)와 키(인치)는 다음과 같은 관계가 성립한다.
+회귀분석 결과: Coefficients 부분을 살펴보자. y절편(Intercept)은 1003.06553546, 기울기는 -0.00037331 이다. p값(p-value)은 0.000193 로 매우 낮다. 즉 몸무게(파운드)와 키(인치)는 다음과 같은 관계가 성립한다.
 
 annual.avg.price.per.bushel = 1003.06553546  -0.00037331 × wheat.production.by.thousand.bushels
+
 기울기의 값이 마이너스이므로 그래프로 그리면 우하향하는 직선일 것이다.  그리고 밀의 생산량과 가격 사이에는 반비례 관계가 성립한다. 즉, 수요/공급의 법칙이 성립한다.  
 
 
 cor.test(data01$wheat.production.by.thousand.bushels, data01$annual.avg.price.per.bushel)
 
-상관분석 결과 상관계수(r) 값은 -0.6295909이며 이 값의 제곱은 0.3964로 회귀분석결과에서 나온 Multiple R-squared 값과 정확히 일치한다. 
+상관분석 결과: 상관계수(r) 값은 -0.6295909이며 이 값의 제곱은 0.3964로 회귀분석결과에서 나온 Multiple R-squared 값과 정확히 일치한다. 
 
-
-#ggplot(data01, aes(x=annual.avg.price.per.bushel, y=wheat.production.by.thousand.bushels)) + geom_point() + stat_smooth(method = "lm")
 
 ggplot(data01, aes(x=wheat.production.by.thousand.bushels, y=annual.avg.price.per.bushel)) + geom_point() + stat_smooth(method = "lm")
 
 
- 
 
 library(plotly)
-
 
 
 t=ggplot(data01, aes(x=wheat.production.by.thousand.bushels, y=annual.avg.price.per.bushel)) + geom_point() + stat_smooth(method = "lm", level=0.95)
