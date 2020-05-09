@@ -14,6 +14,8 @@ library(moonBook2)
 
 Encoding : utf-8
 
+install.packages("Rcmdr")
+library(Rcmdr)
 
 devtools::install_github("cardiomoon/kormaps2014")
 library(kormaps2014)
