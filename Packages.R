@@ -16,6 +16,8 @@ Encoding : utf-8
 
 install.packages("Rcmdr")
 library(Rcmdr)
+Commander()
+Windows()
 
 devtools::install_github("cardiomoon/kormaps2014")
 library(kormaps2014)
