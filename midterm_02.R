@@ -18,6 +18,52 @@ mean(man)
 
 sd(man)
 
-cv1 = 100*sd(man)/mean(man) # 남자 입사시섬 성적의 변이계수
+cv1 = 100*sd(man)/mean(man) # 남자 입사시험 성적의 변이계수
 
 print(cv1)
+
+mean(woman)
+sd(woman)
+cv2 = 100*sd(woman)/mean(woman) # 여자 입사시험 성적의 변이계수
+print(cv2)
+
+
+x <- c(68, 70, 70, 71, 69, 74, 71, 72, 70, 73)
+mean(x)
+sd(x)
+t.test(x, conf.level = 0.95)[["conf.int"]]
+t.test(x, conf.level = 0.99)[["conf.int"]]
+
+score <- C(54, 57, 55, 23, 51, 64, 90, 51, 52, 43, 15, 10, 82, 74, 54, 78, 37, 73, 52, 48, 41, 33, 52, 30, 41, 51, 18, 39, 46, 28, 53, 44, 46, 56, 28, 58, 29, 58, 67, 35, 25, 38, 61, 53, 23, 73, 69, 47, 41, 45, 77, 56, 89, 28, 54, 99, 10, 43, 35, 24, 21, 23, 67, 14, 53)
+
+score <- read.table(file="/workspace/R/score.txt", header=FALSE, sep="")
+
+score
+
+score1 <- as.numeric(score)
+
+score1
+
+mean(score1)
+
+median(score1)
+
+var(score1)
+
+sd(score1)
+
+cv <- sd(score1) / mean(score1)
+
+cv
+
+# 평균과 중앙값이 거의 일치하므로 자료가 평균을 중심으로 모여 있고 
+
+names(score1)[which(score1==max(score1))] # 최빈값
+
+max(score1)
+
+stem(score1)
+
+hist(score1)
+
+boxplot(score1)
