@@ -67,3 +67,8 @@ stem(score1)
 hist(score1)
 
 boxplot(score1)
+
+library()
+search()
+install.packages("rpart")
+library(rpart)
