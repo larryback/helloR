@@ -82,6 +82,8 @@ gendername
 
 par(mfrow = c(1, 2))
 
+par(mfrow = c(1, 1))
+
 
 #barplot(gender.height ~gendername)
 
@@ -93,9 +95,9 @@ hist(height~gender.height$gender)
 
 
 
-olympic88_male <- olympic88 %>% filter(gender==1)
+olympic88_male <- olympic88 %>% filter(gender==1) # 남성은 1번
 
-olympic88_female <- olympic88 %>% filter(gender==2)
+olympic88_female <- olympic88 %>% filter(gender==2)  # 여성은 2번
 
 attach(olympic88)
 
@@ -103,20 +105,61 @@ olympic88_male
 
 olympic88_female 
 
+
+stem(olympic88_male$height)
+
+stem(olympic88_female$height)
+
+
+stem(olympic88_male$weight)
+
+stem(olympic88_female$weight)
+
+
+stem(olympic88_male$leg)
+
+stem(olympic88_female$leg)
+
+
+stem(olympic88_male$sprint50m.)
+
+stem(olympic88_female$sprint50m.)
+
+
+par(mfrow = c(1, 2))
+
+hist(olympic88_male$weight)
+
+hist(olympic88_female$weight)
+
+
 hist(olympic88_male$height)
 
 hist(olympic88_female$height)
 
-hist(height~gender)
 
-mode(gender)
+hist(olympic88_male$leg)
 
-stem(height~gender)
+hist(olympic88_female$leg)
 
-stem(height)
+
+hist(olympic88_male$sprint50m.)
+
+hist(olympic88_female$sprint50m.)
 
 
 boxplot(height~gender, main="남녀별 신장")
+
+
+boxplot(weight~gender, main="남녀별 몸무게")
+
+
+boxplot(leg~gender, main="남녀별 다리길이")
+
+
+boxplot(sprint50m.~gender, main="남녀별 50m달리기")
+
+
 
 boxplot(height~gendername, main="남녀별 신장")
 
