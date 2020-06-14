@@ -128,6 +128,9 @@ stem(olympic88_female$sprint50m.)
 
 par(mfrow = c(1, 2))
 
+par(mfrow = c(1, 1))
+
+
 hist(olympic88_male$weight)
 
 hist(olympic88_female$weight)
@@ -169,3 +172,10 @@ points(height[sex==1], sprint50m.[sex==1], pch="M", col="BLUE")
 points(height[sex==2], sprint50m.[sex==2], pch="F", col="RED")
 
 ggplot( olympic88, aes(x=height, fill= gender,  color=gender))  + geom_histogram(fill="#F8766D",  colour="black", bins = 4,position = "dodge", binwidth = 0.5)
+
+
+data7<-read.csv("USArrests.csv", header=T, stringsAsFactors = F)
+getwd()
+setwd('C:/workspace/R/helloR')
+data7
+ls()
