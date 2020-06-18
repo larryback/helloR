@@ -179,3 +179,38 @@ getwd()
 setwd('C:/workspace/R/helloR')
 data7
 ls()
+
+
+bowling_match = read.xlsx("C:/Users/Administrator/Desktop/기말시험 문제지 폴더/데이터정보처리 입문 과제물/bowling_match.xlsx", header=T, 1)
+
+attach(bowling_match)
+
+par(mfrow = c(1, 2))
+
+mean(player.A)
+
+mean(player.B)
+  
+median(player.A)
+
+median(player.B)
+
+sd(player.A)
+
+sd(player.B)
+
+hist(player.A)
+
+hist(player.B)
+
+stem(player.A)
+
+stem(player.B)
+
+boxplot(player.A, main="Player A")
+
+boxplot(player.B, main="Player B")
+
+range(player.A)
+
+range(player.B)

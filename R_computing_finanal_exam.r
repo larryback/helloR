@@ -72,7 +72,9 @@ gugu1
 #install.packages("igraph")
 library(igraph)
 
-g4 <- graph(c("home","workplace","workplace","school","school","home"))
+#g4 <- graph(c("home","workplace","workplace","school","school","home"))
+
+g4 <- graph(c("home(500000)","workplace(300000)","workplace(300000)","school(200000)","school(200000)","home(500000)"))
 
 E(g4)
 
@@ -86,7 +88,12 @@ E(g4)$traffic_time <- c(1,1,1)
 
 V(g4)$spending <- c(500000, 300000, 200000)
 
+
+
+
 (E(g4)$width <- E(g4)$traffic_time)
+
+
 
 # 교통수단 색지정 지하철:1(black), 버스:2(maroon), 자전거:3(blue)
 te <- c("subway", "bus", "bicycle")
@@ -94,9 +101,15 @@ line.col <- ifelse(te=="subway", 1, ifelse(te=="bus",2,3))
 colrs <- c("black", "maroon", "blue")
 mycolrs <- c("gold", "lightpink", "tomato")
 
-plot(g4, edge.arrow.size=1.5, vertex.frame.color="gray", vertex.label.color="black", vertex.label.dist=2, edge.curved=0.2, vertex.size=V(g4)$stay_time, vertex.label.cex=1.2, edge.color=colrs[line.col], vertex.color=c("pink", "peru", "skyblue"))
+#plot(g4, edge.arrow.size=1.5, vertex.frame.color="gray", vertex.label.color="black", vertex.label.dist=2, edge.curved=0.2, vertex.size=V(g4)$stay_time*10, vertex.label.cex=1.2, edge.color=colrs[line.col], vertex.color=c("pink", "peru", "skyblue"))
+#legend("topleft", c("home","workplace","school"), pch=21, pt.bg=c("gold","tomato","lightpink" ), bty="n", ncol=1)
+#legend(x=-1.5, y=-1.5, c("subway", "bus", "bicycle"), lty=1, lwd=2, col=colrs, bty = "n", ncol = 3)
+
+plot(g4, edge.arrow.size=1.5, vertex.frame.color="gray", vertex.label.color="black", vertex.label.dist=2, edge.curved=0.2, vertex.size=V(g4)$stay_time*10, vertex.label.cex=1.2, edge.color=colrs[line.col], vertex.color=c("pink", "peru", "skyblue"))
 legend("topleft", c("home","workplace","school"), pch=21, pt.bg=c("gold","tomato","lightpink" ), bty="n", ncol=1)
 legend(x=-1.5, y=-1.5, c("subway", "bus", "bicycle"), lty=1, lwd=2, col=colrs, bty = "n", ncol = 3)
+
+
 
 
 state.x77
