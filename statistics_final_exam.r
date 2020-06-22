@@ -61,6 +61,53 @@ table(catdata)
 chisq.test(catdata$sex, catdata$smoke, correct = FALSE)
 # correct = FALSE 기대도수가 5이하여도 보정하지 않는다.
 
-y1 <- c(22.5, 97.8, 29.1, 97.0, 35.8, 44.2, 82.0, 56.0, 9.3, 19.9, 39.5, 12.8, 37.4) # SRRS 점수 저 <= 54
+y1 <- c(22.5, 97.8, 29.1, 97.0, 35.8, 44.2, 82.0, 56.0, 9.3, 19.9, 39.5, 12.8, 37.4) # SRRS 점수 저 <= 54 (==1)
 
-y2 <- c()
+y2 <- c(15.1, 23.2, 10.5, 13.9, 9.7, 19.0, 19.8, 9.1, 30.1, 15.5, 10.3, 11.0 ) # SRRS 점수 중  55 ~ 99(==2)
+
+y3 <- c(10.2, 11.3, 11.4, 5.3, 14.5, 11.0, 13.6, 33.4, 25.0, 27.0, 36.3, 17.7) # SRRS 점수 중  >= 100(==3)
+
+y <- c(y1, y2, y3)
+
+group <- c(rep(1, 13), rep(2, 12), rep(3, 12)) 
+
+group_df <- data.frame(y, group)
+
+group_df
+
+sapply(group_df, class)
+
+group_df <- transform(group_df, group = factor(group))
+
+sapply(group_df, class)
+
+attach(group_df)
+
+
+boxplot(y ~ group,  main = "Boxplot of NK cell activity by SRSS condition y1/y2/y3", 
+                xlab = "Factor Levels : SRSS condition y1/y2/y3", 
+                 ylab = "NK cell activity")
+
+tapply(y, group, summary)
+
+detach(group_df)
+
+aov(y ~ group, data = group_df)
+
+summary(aov(y ~ group, data = group_df))
+
+bartlett.test(y ~ group, data = group_df)
+
+install.packages("UsingR")
+
+
+
+library(UsingR)
+
+
+shapiro.test(group_df$y)
+
+hist(group_df$y)
+
+
+kruskal.test(y ~ group, data = group_df)
